@@ -115,105 +115,116 @@ except IndexError:
 
 # MAIN
 
-running = True
-while running:
 
-    clock.tick(60)
+def main():
+    running = True
+    while running:
 
-    for e in pygame.event.get():
-        if e.type == pygame.QUIT:
-            running = False
-        if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
-            running = False
+        sound = pygame.mixer.Sound('ttron.wav')
+        sound.play(loops=0, maxtime=0, fade_ms=0)
 
-        # JOYSTICK
-        try:
-            if e.type == pygame.locals.JOYAXISMOTION:
-                player1jx, player1jy = player1_joystick.get_axis(0), player1_joystick.get_axis(1)
-                if player1jx < 0:
-                    player2.moveLeft()
-                if player1jx > 0:
-                    player2.moveRight()
-                if player1jy < 0:
-                    player2.moveUp()
-                if player1jy > 0:
-                    player2.moveDown()
-                player2jx, player2jy = player2_joystick.get_axis(0), player2_joystick.get_axis(1)
-                if player2jx < 0:
-                    player.moveLeft()
-                if player2jx > 0:
-                    player.moveRight()
-                if player2jy < 0:
-                    player.moveUp()
-                if player2jy > 0:
-                    player.moveDown()
-        except:
-            pass
+        clock.tick(60)
 
-    # PLAYER 1
-    # Move the player if an arrow key is pressed
-    key = pygame.key.get_pressed()
-    if key[pygame.K_LEFT]:
-        player.moveLeft()
-    if key[pygame.K_RIGHT]:
-        player.moveRight()
-    if key[pygame.K_UP]:
-        player.moveUp()
-    if key[pygame.K_DOWN]:
-        player.moveDown()
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                running = False
+            if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
+                running = False
 
-    player.moveOn()
+            # JOYSTICK
+            try:
+                if e.type == pygame.locals.JOYAXISMOTION:
+                    player1jx, player1jy = player1_joystick.get_axis(0), player1_joystick.get_axis(1)
+                    if player1jx < 0:
+                        player2.moveLeft()
+                    if player1jx > 0:
+                        player2.moveRight()
+                    if player1jy < 0:
+                        player2.moveUp()
+                    if player1jy > 0:
+                        player2.moveDown()
+                    player2jx, player2jy = player2_joystick.get_axis(0), player2_joystick.get_axis(1)
+                    if player2jx < 0:
+                        player.moveLeft()
+                    if player2jx > 0:
+                        player.moveRight()
+                    if player2jy < 0:
+                        player.moveUp()
+                    if player2jy > 0:
+                        player.moveDown()
+            except:
+                pass
 
-    # PLAYER 2
-    key = pygame.key.get_pressed()
-    if key[pygame.K_a]:
-        player2.moveLeft()
-    if key[pygame.K_d]:
-        player2.moveRight()
-    if key[pygame.K_w]:
-        player2.moveUp()
-    if key[pygame.K_s]:
-        player2.moveDown()
+        # PLAYER 1
+        # Move the player if an arrow key is pressed
+        key = pygame.key.get_pressed()
+        if key[pygame.K_LEFT]:
+            player.moveLeft()
+        if key[pygame.K_RIGHT]:
+            player.moveRight()
+        if key[pygame.K_UP]:
+            player.moveUp()
+        if key[pygame.K_DOWN]:
+            player.moveDown()
 
-    player2.moveOn()
+        player.moveOn()
 
-    # Draw the scene
+        # PLAYER 2
+        key = pygame.key.get_pressed()
+        if key[pygame.K_a]:
+            player2.moveLeft()
+        if key[pygame.K_d]:
+            player2.moveRight()
+        if key[pygame.K_w]:
+            player2.moveUp()
+        if key[pygame.K_s]:
+            player2.moveDown()
+
+        player2.moveOn()
+
+        # Draw the scene
+        screen.fill((0, 0, 0))
+        # Player 1 walls
+        counter1 = 0
+        counter2 = 0
+        coll_range = len(walls[0]) - (player.moto.rect.width / 2 + 10)
+        coll_range_2 = len(walls[1]) - (player2.moto.rect.width / 2 + 10)
+        for wall in walls[0]:
+            if player2.moto.rect.colliderect(wall.rect):
+                running = False
+            if (counter1 < coll_range) and player.moto.rect.colliderect(wall.rect):
+                running = False
+            counter1 += 1
+            pygame.draw.rect(screen, (255, 255, 255), wall.rect)
+        # Player 2 walls
+        for wall in walls[1]:
+            if player.moto.rect.colliderect(wall.rect):
+                running = False
+            if (counter2 < coll_range_2) and player2.moto.rect.colliderect(wall.rect):
+                running = False
+            counter2 += 1
+            pygame.draw.rect(screen, (0, 255, 255), wall.rect)
+
+        # Player 1
+        pygame.draw.rect(screen, (255, 200, 0), player.rect)
+        screen.blit(player.moto.image, (player.moto.rect.x, player.moto.rect.y))
+
+        # Player 2
+        pygame.draw.rect(screen, (255, 200, 0), player2.rect)
+        screen.blit(player2.moto.image, (player2.moto.rect.x, player2.moto.rect.y))
+
+
+        pygame.display.flip()
+
+
+    # END SCREEN
+    end = pygame.image.load('gameover.png')
     screen.fill((0, 0, 0))
-    # Player 1 walls
-    counter1 = 0
-    counter2 = 0
-    coll_range = len(walls[0]) - (player.moto.rect.width / 2 + 10)
-    coll_range_2 = len(walls[1]) - (player2.moto.rect.width / 2 + 10)
-    for wall in walls[0]:
-        if player2.moto.rect.colliderect(wall.rect):
-            running = False
-        if (counter1 < coll_range) and player.moto.rect.colliderect(wall.rect):
-            running = False
-        counter1 += 1
-        pygame.draw.rect(screen, (255, 255, 255), wall.rect)
-    # Player 2 walls
-    for wall in walls[1]:
-        if player.moto.rect.colliderect(wall.rect):
-            running = False
-        if (counter2 < coll_range_2) and player2.moto.rect.colliderect(wall.rect):
-            running = False
-        counter2 += 1
-        pygame.draw.rect(screen, (0, 255, 255), wall.rect)
-
-    # Player 1
-    pygame.draw.rect(screen, (255, 200, 0), player.rect)
-    screen.blit(player.moto.image, (player.moto.rect.x, player.moto.rect.y))
-
-    # Player 2
-    pygame.draw.rect(screen, (255, 200, 0), player2.rect)
-    screen.blit(player2.moto.image, (player2.moto.rect.x, player2.moto.rect.y))
-
+    screen.blit(end, (10, 10))
+    # screen.fill((255, 255, 255))
     pygame.display.flip()
+    pygame.time.wait(8000)
 
 
-# END SCREEN
-screen.fill((255, 255, 255))
-pygame.display.flip()
-
-pygame.quit()
-sys.exit(0)
+# pygame.quit()
+# sys.exit(0)
