@@ -3,6 +3,7 @@ import sys
 import random
 import pygame
 import time
+from pygame import locals
 
 SCREEN_WIDTH = 768
 SCREEN_HEIGHT = 768
@@ -100,6 +101,18 @@ walls = [[], []]
 player = Player(0, SCREEN_WIDTH - 1, int(SCREEN_HEIGHT / 2), 2, 16, 1)
 player2 = Player(1, 0, int(SCREEN_HEIGHT / 2), 2, 16, 0)
 
+# JOYSTICK
+try:
+    pygame.joystick.init()
+    joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
+    joysticks[0].init()
+    joysticks[1].init()
+    player1_joystick = joysticks[0]
+    player2_joystick = joysticks[1]
+except IndexError:
+    player1_joystick = None
+    player2_joystick = None
+
 # MAIN
 
 running = True
@@ -112,6 +125,13 @@ while running:
             running = False
         if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
             running = False
+
+        # JOYSTICK
+        if e.type == pygame.locals.JOYAXISMOTION:
+            player1jx, player1jy = player1_joystick.get_axis(0), player1_joystick.get_axis(1)
+            print('Player 1 x and y : ', str(player1jx), str(player1jy))
+            player2jx, player2jy = player2_joystick.get_axis(0), player2_joystick.get_axis(1)
+            print('Player 2 x and y : ', str(player2jx), str(player2jy))
 
     # PLAYER 1
     # Move the player if an arrow key is pressed
