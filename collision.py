@@ -52,7 +52,7 @@ screen = pygame.display.set_mode((320, 240))
 clock = pygame.time.Clock()
 walls = [] # List to hold the walls
 player = Player(32, 32, 16, 16) # Create the player
-player2 = Player(12, 12, 16, 16)
+player2 = Player(16, 16, 16, 16)
 # Holds the level layout in a list of strings.
 level = [
 "WWWWWWWWWWWWWWWWWWWW",
@@ -106,6 +106,19 @@ while running:
     if key[pygame.K_DOWN]:
         player.move(0, 2)
 
+
+
+    key = pygame.key.get_pressed()
+    if key[pygame.K_a]:
+        player2.move(-2, 0)
+    if key[pygame.K_d]:
+        player2.move(2, 0)
+    if key[pygame.K_w]:
+        player2.move(0, -2)
+    if key[pygame.K_a]:
+        player2.move(0, 2)
+
+
     # Just added this to make it slightly fun ;)
     if player.rect.colliderect(end_rect):
         raise SystemExit
@@ -116,4 +129,5 @@ while running:
         pygame.draw.rect(screen, (255, 255, 255), wall.rect)
     pygame.draw.rect(screen, (255, 0, 0), end_rect)
     pygame.draw.rect(screen, (255, 200, 0), player.rect)
+    pygame.draw.rect(screen, (255, 200, 0), player2.rect)
     pygame.display.flip()
