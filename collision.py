@@ -123,6 +123,8 @@ while running:
     if player.rect.colliderect(end_rect):
         raise SystemExit
 
+    if player.rect.colliderect(player2):
+        raise SystemExit
     # Draw the scene
     screen.fill((0, 0, 0))
     for wall in walls:
