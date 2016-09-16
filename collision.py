@@ -7,14 +7,33 @@ SCREEN_WIDTH = 768
 SCREEN_HEIGHT = 768
 
 
+class Moto(pygame.sprite.Sprite):
+
+    def __init__(self, player_num):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = pygame.image.load("motor" + str(player_num) + ".png").convert()
+
+        # Fetch the rectangle object that has the dimensions of the image
+        # Update the position of this object by setting the values of rect.x and rect.y
+        self.rect = self.image.get_rect()
+
+    def move_single_axis(self, dx, dy):
+        # Move the rect
+        self.rect.x += dx
+        self.rect.y += dy
+
+
 # Class for the orange dude
 class Player(object):
 
     def __init__(self, player_num, px, py, sx, sy, start_direction):
         self.player_num = player_num
         self.rect = pygame.Rect(px, py, sx, sy)
-        self.image = None
         self.direction = start_direction
+        self.moto = Moto(player_num)
+        self.moto.rect.x = px
+        self.moto.rect.y = py
 
     def moveRight(self):
         self.direction = 0
@@ -43,8 +62,10 @@ class Player(object):
         # Move each axis separately. Note that this checks for collisions both times.
         if dx != 0:
             self.move_single_axis(dx, 0)
+            self.moto.move_single_axis(dx, 0)
         if dy != 0:
             self.move_single_axis(0, dy)
+            self.moto.move_single_axis(0, dy)
 
     def move_single_axis(self, dx, dy):
 
@@ -77,9 +98,6 @@ walls = [[], []]
 # starting positions
 player = Player(0, 0, int(SCREEN_HEIGHT / 2), 2, 16, 0)
 player2 = Player(1, SCREEN_WIDTH - 1, int(SCREEN_HEIGHT / 2), 2, 16, 1)
-
-player.image = pygame.image.load("motor1.png").convert()
-player2.image = pygame.image.load("motor2.png").convert()
 
 # MAIN
 
@@ -129,22 +147,24 @@ while running:
     screen.fill((0, 0, 0))
     # Player 1 walls
     for wall in walls[0]:
-        #if player.rect.colliderect(wall.rect):
-        #    running = False
+        if player2.moto.rect.colliderect(wall.rect):
+            print("player2 hit player1 wall")
+            running = False
         pygame.draw.rect(screen, (255, 255, 255), wall.rect)
     # Player 2 walls
     for wall in walls[1]:
-        #if player2.rect.colliderect(wall.rect):
-        #    running = False
+        if player.moto.rect.colliderect(wall.rect):
+            print("player1 hit player2 wall")
+            running = False
         pygame.draw.rect(screen, (0, 255, 255), wall.rect)
 
     # Player 1
     pygame.draw.rect(screen, (255, 200, 0), player.rect)
-    screen.blit(player.image, (player.rect.x, player.rect.y))
+    screen.blit(player.moto.image, (player.moto.rect.x, player.moto.rect.y))
 
     # Player 2
     pygame.draw.rect(screen, (255, 200, 0), player2.rect)
-    screen.blit(player2.image, (player2.rect.x, player2.rect.y))
+    screen.blit(player2.moto.image, (player2.moto.rect.x, player2.moto.rect.y))
 
     pygame.display.flip()
 
