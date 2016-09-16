@@ -50,7 +50,7 @@ class Menu():
             return 0
         elif choose == 4:
             print ("You choose 'Quit Game'.")
-            pygame.quit()
+            return 0
 
 
 while True:
@@ -64,3 +64,4 @@ while True:
         g.main()
     else:
         pygame.quit()
+        break
