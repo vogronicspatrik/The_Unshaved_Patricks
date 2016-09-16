@@ -15,10 +15,17 @@ class Player(object):
 
         # Move each axis separately. Note that this checks for collisions both times.
         if dx != 0:
+            if dx < 0:
+                Wall(self.player_num, (self.rect.centerx + dx + (self.rect.width / 2), self.rect.centery))
+            else:
+                Wall(self.player_num, (self.rect.centerx + dx - (self.rect.width / 2), self.rect.centery))
             self.move_single_axis(dx, 0)
         if dy != 0:
+            if dy < 0:
+                Wall(self.player_num, (self.rect.centerx, self.rect.centery + dy + (self.rect.height / 2)))
+            else:
+                Wall(self.player_num, (self.rect.centerx, self.rect.centery + dy - (self.rect.height / 2)))
             self.move_single_axis(0, dy)
-        Wall(self.player_num, (self.rect.x + dx, self.rect.y + dy))
 
     def move_single_axis(self, dx, dy):
 
@@ -32,21 +39,21 @@ class Wall(object):
 
     def __init__(self, player_num, pos):
         walls[player_num].append(self)
-        self.rect = pygame.Rect(pos[0], pos[1], 1, 1)
+        self.rect = pygame.Rect(pos[0], pos[1], 2, 2)
 
 # Initialise pygame
 os.environ["SDL_VIDEO_CENTERED"] = "1"
 pygame.init()
 
 # Set up the display
-pygame.display.set_caption("Me get red square!")
+pygame.display.set_caption("HECA_TRON!")
 screen = pygame.display.set_mode((320, 240))
 
 clock = pygame.time.Clock()
 # walls for 2 players: lists in list
 walls = [[], []]
-player = Player(0, 32, 32, 16, 16)
-player2 = Player(1, 16, 16, 16, 16)
+player = Player(0, 32, 32, 2, 16)
+player2 = Player(1, 16, 16, 2, 16)
 
 # MAIN
 
@@ -92,13 +99,13 @@ while running:
     screen.fill((0, 0, 0))
     # Player 1 walls
     for wall in walls[0]:
-        if player.rect.colliderect(wall.rect):
-            running = False
+        #if player.rect.colliderect(wall.rect):
+        #    running = False
         pygame.draw.rect(screen, (255, 255, 255), wall.rect)
     # Player 2 walls
     for wall in walls[1]:
-        if player2.rect.colliderect(wall.rect):
-            running = False
+        #if player2.rect.colliderect(wall.rect):
+        #    running = False
         pygame.draw.rect(screen, (0, 255, 255), wall.rect)
 
     pygame.draw.rect(screen, (255, 200, 0), player.rect)
