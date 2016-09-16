@@ -1,0 +1,156 @@
+import os
+import sys
+import random
+import pygame
+
+SCREEN_WIDTH = 768
+SCREEN_HEIGHT = 768
+
+
+# Class for the orange dude
+class Player(object):
+
+    def __init__(self, player_num, px, py, sx, sy, start_direction):
+        self.player_num = player_num
+        self.rect = pygame.Rect(px, py, sx, sy)
+        self.image = None
+        self.direction = start_direction
+
+    def moveRight(self):
+        self.direction = 0
+
+    def moveLeft(self):
+        self.direction = 1
+
+    def moveUp(self):
+        self.direction = 2
+
+    def moveDown(self):
+        self.direction = 3
+
+    def moveOn(self):
+        if self.direction == 0:
+            self.move(2, 0)
+        if self.direction == 1:
+            self.move(-2, 0)
+        if self.direction == 2:
+            self.move(0, -2)
+        if self.direction == 3:
+            self.move(0, 2)
+
+    def move(self, dx, dy):
+
+        # Move each axis separately. Note that this checks for collisions both times.
+        if dx != 0:
+            self.move_single_axis(dx, 0)
+        if dy != 0:
+            self.move_single_axis(0, dy)
+
+    def move_single_axis(self, dx, dy):
+
+        # Move the rect
+        self.rect.x += dx
+        self.rect.y += dy
+
+        # Draw a wall (after the movement)
+        Wall(self.player_num, (self.rect.centerx, self.rect.centery))
+
+
+# Nice class to hold a wall rect
+class Wall(object):
+
+    def __init__(self, player_num, pos):
+        walls[player_num].append(self)
+        self.rect = pygame.Rect(pos[0], pos[1], 2, 2)
+
+# Initialise pygame
+os.environ["SDL_VIDEO_CENTERED"] = "1"
+pygame.init()
+
+# Set up the display
+pygame.display.set_caption("HECA_TRON!")
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+clock = pygame.time.Clock()
+# walls for 2 players: lists in list
+walls = [[], []]
+# starting positions
+player = Player(0, 0, int(SCREEN_HEIGHT / 2), 2, 16, 0)
+player2 = Player(1, SCREEN_WIDTH - 1, int(SCREEN_HEIGHT / 2), 2, 16, 1)
+
+player.image = pygame.image.load("motor1.png").convert()
+player2.image = pygame.image.load("motor2.png").convert()
+
+# MAIN
+
+running = True
+while running:
+
+    clock.tick(60)
+
+    for e in pygame.event.get():
+        if e.type == pygame.QUIT:
+            running = False
+        if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
+            running = False
+
+    # PLAYER 1
+    # Move the player if an arrow key is pressed
+    key = pygame.key.get_pressed()
+    if key[pygame.K_LEFT]:
+        player.moveLeft()
+    if key[pygame.K_RIGHT]:
+        player.moveRight()
+    if key[pygame.K_UP]:
+        player.moveUp()
+    if key[pygame.K_DOWN]:
+        player.moveDown()
+
+    player.moveOn()
+
+    # PLAYER 2
+    key = pygame.key.get_pressed()
+    if key[pygame.K_a]:
+        player2.moveLeft()
+    if key[pygame.K_d]:
+        player2.moveRight()
+    if key[pygame.K_w]:
+        player2.moveUp()
+    if key[pygame.K_s]:
+        player2.moveDown()
+
+    player2.moveOn()
+
+    # Just added this to make it slightly fun ;)
+    # if player.rect.colliderect(end_rect):
+    #    raise SystemExit
+
+    # Draw the scene
+    screen.fill((0, 0, 0))
+    # Player 1 walls
+    for wall in walls[0]:
+        #if player.rect.colliderect(wall.rect):
+        #    running = False
+        pygame.draw.rect(screen, (255, 255, 255), wall.rect)
+    # Player 2 walls
+    for wall in walls[1]:
+        #if player2.rect.colliderect(wall.rect):
+        #    running = False
+        pygame.draw.rect(screen, (0, 255, 255), wall.rect)
+
+    # Player 1
+    pygame.draw.rect(screen, (255, 200, 0), player.rect)
+    screen.blit(player.image, (player.rect.x, player.rect.y))
+
+    # Player 2
+    pygame.draw.rect(screen, (255, 200, 0), player2.rect)
+    screen.blit(player2.image, (player2.rect.x, player2.rect.y))
+
+    pygame.display.flip()
+
+
+screen.fill((255, 255, 255))
+pygame.display.flip()
+
+pygame.quit()
+sys.exit(0)
