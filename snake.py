@@ -4,19 +4,6 @@ import pygame
 import time
 
 
-class Apple:
-    x = 0
-    y = 0
-    step = 44
-
-    def __init__(self, x, y):
-        self.x = x * self.step
-        self.y = y * self.step
-
-    def draw(self, surface, image):
-        surface.blit(image, (self.x, self.y))
-
-
 class Player:
     x = [0]
     y = [0]
@@ -89,16 +76,13 @@ class App:
     windowWidth = 800
     windowHeight = 600
     player = 0
-    apple = 0
 
     def __init__(self):
         self._running = True
         self._display_surf = None
         self._image_surf = None
-        self._apple_surf = None
         self.game = Game()
         self.player = Player(3)
-        self.apple = Apple(5, 5)
 
     def on_init(self):
         pygame.init()
@@ -107,7 +91,6 @@ class App:
         pygame.display.set_caption('Pygame pythonspot.com example')
         self._running = True
         self._image_surf = pygame.image.load("motor1.png").convert()
-        self._apple_surf = pygame.image.load("motor2.png").convert()
 
     def on_event(self, event):
         if event.type == QUIT:
@@ -116,12 +99,7 @@ class App:
     def on_loop(self):
         self.player.update()
 
-        # does snake eat apple?
-        for i in range(0, self.player.length):
-            if self.game.isCollision(self.apple.x, self.apple.y, self.player.x[i], self.player.y[i], 44):
-                self.apple.x = randint(2, 9) * 44
-                self.apple.y = randint(2, 9) * 44
-                self.player.length = self.player.length + 1
+        # self.player.length = self.player.length + 1
 
         # does snake collide with itself?
         for i in range(2, self.player.length):
@@ -136,7 +114,6 @@ class App:
     def on_render(self):
         self._display_surf.fill((0, 0, 0))
         self.player.draw(self._display_surf, self._image_surf)
-        self.apple.draw(self._display_surf, self._apple_surf)
         pygame.display.flip()
 
     def on_cleanup(self):
