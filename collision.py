@@ -177,6 +177,16 @@ while running:
 
     player2.moveOn()
 
+    # check borders
+    if player.moto.rect.x < 0 or player2.moto.rect.x < 0:
+        running = False
+    if player.moto.rect.x > SCREEN_WIDTH or player2.moto.rect.x > SCREEN_WIDTH:
+        running = False
+    if player.moto.rect.y < 0 or player2.moto.rect.y < 0:
+        running = False
+    if player.moto.rect.y > SCREEN_HEIGHT or player2.moto.rect.y > SCREEN_HEIGHT:
+        running = False
+
     # Draw the scene
     screen.fill((0, 0, 0))
     # Player 1 walls
