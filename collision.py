@@ -263,30 +263,34 @@ class Game:
 
             pygame.display.flip()
 
-        return winner
+        return self.game_over(winner)
 
     # END SCREEN
     def game_over(self, winner):
 
         print("Winner: ", winner)
         running = True
+        clock = pygame.time.Clock()
         while running:
+
+            clock.tick(60)
+
+            for e in pygame.event.get():
+                if e.type == pygame.QUIT:
+                    print("QUIT 1")
+                    running = False
+                    pygame.quit()
+                if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
+                    print("QUIT 2")
+                    running = False
+                    pygame.quit()
+                if e.type == pygame.KEYDOWN:
+                    running = False
+                    print("BACK TO MENU")
+                    return True
 
             screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
             end = pygame.image.load('gameover.png')
             screen.fill((0, 0, 0))
             screen.blit(end, (10, 10))
-            # screen.fill((255, 255, 255))
             pygame.display.flip()
-            pygame.time.wait(10)
-
-            for e in pygame.event.get():
-                if e.type == pygame.QUIT:
-                    running = False
-                    pygame.quit()
-                if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
-                    running = False
-                    pygame.quit()
-                if e.type == pygame.KEYDOWN:
-                    running = False
-                    self.main()
