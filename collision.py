@@ -57,20 +57,24 @@ class Player(object):
         self.moto.rect.y = py
 
     def moveRight(self):
-        self.direction = 0
-        self.moto.moveRight()
+        if self.direction != 1:
+            self.direction = 0
+            self.moto.moveRight()
 
     def moveLeft(self):
-        self.direction = 1
-        self.moto.moveLeft()
+        if self.direction != 0:
+            self.direction = 1
+            self.moto.moveLeft()
 
     def moveUp(self):
-        self.direction = 2
-        self.moto.moveUp()
+        if self.direction != 3:
+            self.direction = 2
+            self.moto.moveUp()
 
     def moveDown(self):
-        self.direction = 3
-        self.moto.moveDown()
+        if self.direction != 2:
+            self.direction = 3
+            self.moto.moveDown()
 
     def moveOn(self):
         if self.direction == 0:
