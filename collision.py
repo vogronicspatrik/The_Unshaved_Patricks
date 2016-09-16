@@ -11,6 +11,29 @@ class Player(object):
         self.player_num = player_num
         self.rect = pygame.Rect(px, py, sx, sy)
         self.image = None
+        self.direction = 0
+
+    def moveRight(self):
+        self.direction = 0
+
+    def moveLeft(self):
+        self.direction = 1
+
+    def moveUp(self):
+        self.direction = 2
+
+    def moveDown(self):
+        self.direction = 3
+
+    def moveOn(self):
+        if self.direction == 0:
+            self.move(2, 0)
+        if self.direction == 1:
+            self.move(-2, 0)
+        if self.direction == 2:
+            self.move(0, -2)
+        if self.direction == 3:
+            self.move(0, 2)
 
     def move(self, dx, dy):
 
@@ -76,24 +99,28 @@ while running:
     # Move the player if an arrow key is pressed
     key = pygame.key.get_pressed()
     if key[pygame.K_LEFT]:
-        player.move(-2, 0)
+        player.moveLeft()
     if key[pygame.K_RIGHT]:
-        player.move(2, 0)
+        player.moveRight()
     if key[pygame.K_UP]:
-        player.move(0, -2)
+        player.moveUp()
     if key[pygame.K_DOWN]:
-        player.move(0, 2)
+        player.moveDown()
+
+    player.moveOn()
 
     # PLAYER 2
     key = pygame.key.get_pressed()
     if key[pygame.K_a]:
-        player2.move(-2, 0)
+        player2.moveLeft()
     if key[pygame.K_d]:
-        player2.move(2, 0)
+        player2.moveRight()
     if key[pygame.K_w]:
-        player2.move(0, -2)
+        player2.moveUp()
     if key[pygame.K_s]:
-        player2.move(0, 2)
+        player2.moveDown()
+
+    player2.moveOn()
 
     # Just added this to make it slightly fun ;)
     # if player.rect.colliderect(end_rect):
