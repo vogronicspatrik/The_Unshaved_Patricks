@@ -3,15 +3,18 @@ import sys
 import random
 import pygame
 
+SCREEN_WIDTH = 768
+SCREEN_HEIGHT = 768
+
 
 # Class for the orange dude
 class Player(object):
 
-    def __init__(self, player_num, px, py, sx, sy):
+    def __init__(self, player_num, px, py, sx, sy, start_direction):
         self.player_num = player_num
         self.rect = pygame.Rect(px, py, sx, sy)
         self.image = None
-        self.direction = 0
+        self.direction = start_direction
 
     def moveRight(self):
         self.direction = 0
@@ -66,13 +69,14 @@ pygame.init()
 
 # Set up the display
 pygame.display.set_caption("HECA_TRON!")
-screen = pygame.display.set_mode((1024, 768))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 clock = pygame.time.Clock()
 # walls for 2 players: lists in list
 walls = [[], []]
-player = Player(0, 32, 32, 2, 16)
-player2 = Player(1, 16, 16, 2, 16)
+# starting positions
+player = Player(0, 0, int(SCREEN_HEIGHT / 2), 2, 16, 0)
+player2 = Player(1, SCREEN_WIDTH - 1, int(SCREEN_HEIGHT / 2), 2, 16, 1)
 
 player.image = pygame.image.load("motor1.png").convert()
 player2.image = pygame.image.load("motor2.png").convert()
