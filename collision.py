@@ -5,25 +5,44 @@ import pygame
 import time
 from pygame import locals
 
-SCREEN_WIDTH = 768
-SCREEN_HEIGHT = 768
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 1024
 
 
 class Moto(pygame.sprite.Sprite):
 
-    def __init__(self, player_num):
+    def __init__(self, player_num, start_direction):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = pygame.image.load("motor" + str(player_num) + ".png").convert()
+        self.orig_image = self.image
 
         # Fetch the rectangle object that has the dimensions of the image
         # Update the position of this object by setting the values of rect.x and rect.y
         self.rect = self.image.get_rect()
 
+        self.direction = start_direction
+
     def move_single_axis(self, dx, dy):
         # Move the rect
         self.rect.x += dx
         self.rect.y += dy
+
+    def moveRight(self):
+        self.direction = 0
+        self.image = pygame.transform.rotate(self.orig_image, 0)
+
+    def moveLeft(self):
+        self.direction = 1
+        self.image = pygame.transform.rotate(self.orig_image, 0)
+
+    def moveUp(self):
+        self.direction = 2
+        self.image = pygame.transform.rotate(self.orig_image, 90)
+
+    def moveDown(self):
+        self.direction = 3
+        self.image = pygame.transform.rotate(self.orig_image, 90)
 
 
 # Class for the orange dude
@@ -33,21 +52,25 @@ class Player(object):
         self.player_num = player_num
         self.rect = pygame.Rect(px, py, sx, sy)
         self.direction = start_direction
-        self.moto = Moto(player_num)
+        self.moto = Moto(player_num, start_direction)
         self.moto.rect.x = px
         self.moto.rect.y = py
 
     def moveRight(self):
         self.direction = 0
+        self.moto.moveRight()
 
     def moveLeft(self):
         self.direction = 1
+        self.moto.moveLeft()
 
     def moveUp(self):
         self.direction = 2
+        self.moto.moveUp()
 
     def moveDown(self):
         self.direction = 3
+        self.moto.moveDown()
 
     def moveOn(self):
         if self.direction == 0:
@@ -114,14 +137,13 @@ except IndexError:
     player2_joystick = None
 
 # MAIN
-
-
 def main():
+
+    sound = pygame.mixer.Sound('ttron.wav')
+    sound.play(loops=0, maxtime=0, fade_ms=0)
+
     running = True
     while running:
-
-        sound = pygame.mixer.Sound('ttron.wav')
-        sound.play(loops=0, maxtime=0, fade_ms=0)
 
         clock.tick(60)
 
@@ -182,6 +204,16 @@ def main():
 
         player2.moveOn()
 
+        # check borders
+        if player.moto.rect.x < 0 or player2.moto.rect.x < 0:
+            running = False
+        if player.moto.rect.x > SCREEN_WIDTH or player2.moto.rect.x > SCREEN_WIDTH:
+            running = False
+        if player.moto.rect.y < 0 or player2.moto.rect.y < 0:
+            running = False
+        if player.moto.rect.y > SCREEN_HEIGHT or player2.moto.rect.y > SCREEN_HEIGHT:
+            running = False
+
         # Draw the scene
         screen.fill((0, 0, 0))
         # Player 1 walls
@@ -213,9 +245,7 @@ def main():
         pygame.draw.rect(screen, (255, 200, 0), player2.rect)
         screen.blit(player2.moto.image, (player2.moto.rect.x, player2.moto.rect.y))
 
-
         pygame.display.flip()
-
 
     # END SCREEN
     end = pygame.image.load('gameover.png')
@@ -224,7 +254,3 @@ def main():
     # screen.fill((255, 255, 255))
     pygame.display.flip()
     pygame.time.wait(8000)
-
-
-# pygame.quit()
-# sys.exit(0)

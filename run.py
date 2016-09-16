@@ -1,6 +1,11 @@
 import pygame
 import testmenu as dm
 from collision import *
+
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 1024
+
+
 pygame.init()
 
 # Just a few static variables
@@ -8,7 +13,7 @@ red   = 255,  0,  0
 green = 0, 255,  0
 blue =  0,  0, 255
 
-size = width, height = 800,600
+size = width, height = SCREEN_WIDTH, SCREEN_HEIGHT
 screen = pygame.display.set_mode(size)
 # screen.fill(red)
 pygame.display.update()
