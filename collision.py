@@ -127,11 +127,22 @@ while running:
             running = False
 
         # JOYSTICK
-        if e.type == pygame.locals.JOYAXISMOTION:
-            player1jx, player1jy = player1_joystick.get_axis(0), player1_joystick.get_axis(1)
-            print('Player 1 x and y : ', str(player1jx), str(player1jy))
-            player2jx, player2jy = player2_joystick.get_axis(0), player2_joystick.get_axis(1)
-            print('Player 2 x and y : ', str(player2jx), str(player2jy))
+        try:
+            if e.type == pygame.locals.JOYAXISMOTION:
+                player1jx, player1jy = player1_joystick.get_axis(0), player1_joystick.get_axis(1)
+                print('Player 1 x and y : ', str(player1jx), str(player1jy))
+                if player1jx < 0:
+                    player.moveLeft()
+                if player1jx > 0:
+                    player.moveRight()
+                if player1jy < 0:
+                    player.moveUp()
+                if player1jy > 0:
+                    player.moveDown()
+                player2jx, player2jy = player2_joystick.get_axis(0), player2_joystick.get_axis(1)
+                print('Player 2 x and y : ', str(player2jx), str(player2jy))
+        except:
+            pass
 
     # PLAYER 1
     # Move the player if an arrow key is pressed
