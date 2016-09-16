@@ -10,6 +10,7 @@ class Player(object):
     def __init__(self, player_num, px, py, sx, sy):
         self.player_num = player_num
         self.rect = pygame.Rect(px, py, sx, sy)
+        self.image = None
 
     def move(self, dx, dy):
 
@@ -47,13 +48,16 @@ pygame.init()
 
 # Set up the display
 pygame.display.set_caption("HECA_TRON!")
-screen = pygame.display.set_mode((320, 240))
+screen = pygame.display.set_mode((1024, 768))
 
 clock = pygame.time.Clock()
 # walls for 2 players: lists in list
 walls = [[], []]
 player = Player(0, 32, 32, 2, 16)
 player2 = Player(1, 16, 16, 2, 16)
+
+player.image = pygame.image.load("motor1.png").convert()
+player2.image = pygame.image.load("motor2.png").convert()
 
 # MAIN
 
@@ -108,8 +112,14 @@ while running:
         #    running = False
         pygame.draw.rect(screen, (0, 255, 255), wall.rect)
 
+    # Player 1
     pygame.draw.rect(screen, (255, 200, 0), player.rect)
+    screen.blit(player.image, (player.rect.x, player.rect.y))
+
+    # Player 2
     pygame.draw.rect(screen, (255, 200, 0), player2.rect)
+    screen.blit(player2.image, (player2.rect.x, player2.rect.y))
+
     pygame.display.flip()
 
 
