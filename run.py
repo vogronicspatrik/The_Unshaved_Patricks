@@ -9,15 +9,15 @@ SCREEN_HEIGHT = 1024
 pygame.init()
 
 # Just a few static variables
-red   = 255,  0,  0
-green = 0, 255,  0
-blue =  0,  0, 255
+red = 255, 0, 0
+green = 0, 255, 0
+blue = 0, 0, 255
 
 size = width, height = SCREEN_WIDTH, SCREEN_HEIGHT
 screen = pygame.display.set_mode(size)
 # screen.fill(red)
 pygame.display.update()
-pygame.key.set_repeat(5,30)
+pygame.key.set_repeat(5, 30)
 
 
 # class Background(pygame.sprite.Sprite):
@@ -45,10 +45,12 @@ choose = dm.dumbmenu(screen, [
                         '            Options',
                         '            Manual',
                         '            Show Highscore',
-                        '            Quit Game'], 64,64,None,62,1.0,green,red)
+                        '            Quit Game'], 64, 64, None, 62, 1.0, green, red)
 
 if choose == 0:
-    main()
+    g = Game()
+    winner = g.main()
+    g.game_over(winner)
 elif choose == 1:
     print ("You choose 'Options'.")
 elif choose == 2:
@@ -57,5 +59,3 @@ elif choose == 3:
     print ("You choose 'Show Highscore'.")
 elif choose == 4:
     print ("You choose 'Quit Game'.")
-# pygame.quit()
-# exit()
