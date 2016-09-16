@@ -131,22 +131,22 @@ while running:
             if e.type == pygame.locals.JOYAXISMOTION:
                 player1jx, player1jy = player1_joystick.get_axis(0), player1_joystick.get_axis(1)
                 if player1jx < 0:
-                    player.moveLeft()
+                    player2.moveLeft()
                 if player1jx > 0:
-                    player.moveRight()
+                    player2.moveRight()
                 if player1jy < 0:
-                    player.moveUp()
+                    player2.moveUp()
                 if player1jy > 0:
-                    player.moveDown()
+                    player2.moveDown()
                 player2jx, player2jy = player2_joystick.get_axis(0), player2_joystick.get_axis(1)
                 if player2jx < 0:
-                    player2.moveLeft()
+                    player.moveLeft()
                 if player2jx > 0:
-                    player2.moveRight()
+                    player.moveRight()
                 if player2jy < 0:
-                    player2.moveUp()
+                    player.moveUp()
                 if player2jy > 0:
-                    player2.moveDown()
+                    player.moveDown()
         except:
             pass
 
