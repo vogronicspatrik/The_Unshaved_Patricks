@@ -39,16 +39,8 @@ class Player(object):
 
         # Move each axis separately. Note that this checks for collisions both times.
         if dx != 0:
-            if dx < 0:
-                Wall(self.player_num, (self.rect.centerx + dx + (self.rect.width / 2), self.rect.centery))
-            else:
-                Wall(self.player_num, (self.rect.centerx + dx - (self.rect.width / 2), self.rect.centery))
             self.move_single_axis(dx, 0)
         if dy != 0:
-            if dy < 0:
-                Wall(self.player_num, (self.rect.centerx, self.rect.centery + dy + (self.rect.height / 2)))
-            else:
-                Wall(self.player_num, (self.rect.centerx, self.rect.centery + dy - (self.rect.height / 2)))
             self.move_single_axis(0, dy)
 
     def move_single_axis(self, dx, dy):
@@ -56,6 +48,9 @@ class Player(object):
         # Move the rect
         self.rect.x += dx
         self.rect.y += dy
+
+        # Draw a wall (after the movement)
+        Wall(self.player_num, (self.rect.centerx, self.rect.centery))
 
 
 # Nice class to hold a wall rect
