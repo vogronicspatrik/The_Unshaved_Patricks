@@ -111,7 +111,7 @@ class Wall(object):
 
     def __init__(self, player_num, pos):
         walls[player_num].append(self)
-        self.rect = pygame.Rect(pos[0], pos[1], 2, 2)
+        self.rect = pygame.Rect(pos[0], pos[1], 3, 3)
 
 # Initialise pygame
 os.environ["SDL_VIDEO_CENTERED"] = "1"
