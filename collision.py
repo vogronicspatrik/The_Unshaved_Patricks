@@ -115,7 +115,7 @@ while running:
         player2.move(2, 0)
     if key[pygame.K_w]:
         player2.move(0, -2)
-    if key[pygame.K_a]:
+    if key[pygame.K_s]:
         player2.move(0, 2)
 
 
