@@ -81,14 +81,9 @@ class Player(object):
 # Nice class to hold a wall rect
 class Wall(object):
 
-    def __init__(self, player_num, pos, is_passible = True):
+    def __init__(self, player_num, pos):
         walls[player_num].append(self)
         self.rect = pygame.Rect(pos[0], pos[1], 2, 2)
-        self.is_passible = is_passible
-
-    def set_unpassible(self):
-        if not player.rect.colliderect(wall.rect) or not player2.rect.colliderect(wall.rect):
-            self.is_passible = False
 
 # Initialise pygame
 os.environ["SDL_VIDEO_CENTERED"] = "1"
@@ -145,29 +140,27 @@ while running:
 
     player2.moveOn()
 
-    # Just added this to make it slightly fun ;)
-    # if player.rect.colliderect(end_rect):
-    #    raise SystemExit
-
-    for new_wall in walls[0][-1:-3]:
-        new_wall.set_unpassible()
-
-    for new_wall in walls[1][-1:-10]:
-        new_wall.set_unpassible()
-
     # Draw the scene
     screen.fill((0, 0, 0))
     # Player 1 walls
+    counter1 = 0
+    counter2 = 0
+    coll_range = len(walls[0]) - (player.moto.rect.width / 2 + 10)
+    coll_range_2 = len(walls[1]) - (player2.moto.rect.width / 2 + 10)
     for wall in walls[0]:
-        wall.set_unpassible()
         if player2.moto.rect.colliderect(wall.rect):
             running = False
+        if (counter1 < coll_range) and player.moto.rect.colliderect(wall.rect):
+            running = False
+        counter1 += 1
         pygame.draw.rect(screen, (255, 255, 255), wall.rect)
     # Player 2 walls
     for wall in walls[1]:
-        wall.set_unpassible()
         if player.moto.rect.colliderect(wall.rect):
             running = False
+        if (counter2 < coll_range_2) and player2.moto.rect.colliderect(wall.rect):
+            running = False
+        counter2 += 1
         pygame.draw.rect(screen, (0, 255, 255), wall.rect)
 
     # Player 1
