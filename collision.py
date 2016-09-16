@@ -11,19 +11,38 @@ SCREEN_HEIGHT = 768
 
 class Moto(pygame.sprite.Sprite):
 
-    def __init__(self, player_num):
+    def __init__(self, player_num, start_direction):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = pygame.image.load("motor" + str(player_num) + ".png").convert()
+        self.orig_image = self.image
 
         # Fetch the rectangle object that has the dimensions of the image
         # Update the position of this object by setting the values of rect.x and rect.y
         self.rect = self.image.get_rect()
 
+        self.direction = start_direction
+
     def move_single_axis(self, dx, dy):
         # Move the rect
         self.rect.x += dx
         self.rect.y += dy
+
+    def moveRight(self):
+        self.direction = 0
+        self.image = pygame.transform.rotate(self.orig_image, 0)
+
+    def moveLeft(self):
+        self.direction = 1
+        self.image = pygame.transform.rotate(self.orig_image, 0)
+
+    def moveUp(self):
+        self.direction = 2
+        self.image = pygame.transform.rotate(self.orig_image, 90)
+
+    def moveDown(self):
+        self.direction = 3
+        self.image = pygame.transform.rotate(self.orig_image, 90)
 
 
 # Class for the orange dude
@@ -33,21 +52,25 @@ class Player(object):
         self.player_num = player_num
         self.rect = pygame.Rect(px, py, sx, sy)
         self.direction = start_direction
-        self.moto = Moto(player_num)
+        self.moto = Moto(player_num, start_direction)
         self.moto.rect.x = px
         self.moto.rect.y = py
 
     def moveRight(self):
         self.direction = 0
+        self.moto.moveRight()
 
     def moveLeft(self):
         self.direction = 1
+        self.moto.moveLeft()
 
     def moveUp(self):
         self.direction = 2
+        self.moto.moveUp()
 
     def moveDown(self):
         self.direction = 3
+        self.moto.moveDown()
 
     def moveOn(self):
         if self.direction == 0:
