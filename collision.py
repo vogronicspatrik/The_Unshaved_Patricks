@@ -144,29 +144,36 @@ class Game:
             player1_joystick = None
             player2_joystick = None
 
-
         end = pygame.image.load('number3.png')
-        screen.fill((0, 0, 0))
+        # screen.fill((0, 0, 0))
         screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
         pygame.display.flip()
         pygame.time.wait(1000)
 
         end = pygame.image.load('number2.png')
-        screen.fill((0, 0, 0))
+        # screen.fill((0, 0, 0))
         screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
         pygame.display.flip()
         pygame.time.wait(1000)
 
         end = pygame.image.load('number1.png')
-        screen.fill((0, 0, 0))
+        # screen.fill((0, 0, 0))
         screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
         pygame.display.flip()
         pygame.time.wait(1000)
 
+        # end = pygame.image.load('arcade.jpg').convert()
+        # screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
+        # pygame.display.flip()
+
+        background_image = pygame.transform.scale(pygame.image.load('arcade.jpg').convert(), (1280, 1024))
+        screen.blit(background_image, [0, 0])
+
         running = True
         while running:
-
-            clock.tick(60)
+            screen.blit(background_image, [0, 0])
+            pygame.display.flip()
+            clock.tick(100)
 
             for e in pygame.event.get():
                 if e.type == pygame.QUIT:
@@ -240,7 +247,7 @@ class Game:
                 running = False
 
             # Draw the scene
-            screen.fill((0, 0, 0))
+            # screen.fill((0, 0, 0))
             # Player 1 walls
             counter1 = 0
             counter2 = 0
@@ -254,7 +261,7 @@ class Game:
                     winner = 2
                     running = False
                 counter1 += 1
-                pygame.draw.rect(screen, (255, 255, 255), wall.rect)
+                pygame.draw.rect(screen, (255, 0, 0), wall.rect)
             # Player 2 walls
             for wall in Game.walls[1]:
                 if player.moto.rect.colliderect(wall.rect):
@@ -264,7 +271,7 @@ class Game:
                     winner = 1
                     running = False
                 counter2 += 1
-                pygame.draw.rect(screen, (0, 255, 255), wall.rect)
+                pygame.draw.rect(screen, (0, 0, 255), wall.rect)
 
             # Player 1
             pygame.draw.rect(screen, (255, 200, 0), player.rect)
@@ -315,7 +322,7 @@ class Game:
                 screen.blit(label, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 750)))
             else:
                 myfont = pygame.font.SysFont("monospace", 72)
-                label = myfont.render('White won!', 1, (255, 255, 255))
+                label = myfont.render('Red won!', 1, (255, 0, 0))
                 screen.blit(label, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 750)))
 
             pygame.display.flip()
