@@ -1,3 +1,4 @@
+import os
 import pygame
 import testmenu as dm
 from collision import *
@@ -11,6 +12,11 @@ class Menu():
     def start(self):
 
         pygame.init()
+        # Initialise pygame
+        os.environ["SDL_VIDEO_CENTERED"] = "1"
+
+        # Set up the display
+        pygame.display.set_caption("HECA_TRON!")
         screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
         sound = pygame.mixer.Sound('ttron.wav')

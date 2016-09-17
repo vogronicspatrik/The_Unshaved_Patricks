@@ -123,12 +123,6 @@ class Game:
 
         winner = 0
 
-        # Initialise pygame
-        os.environ["SDL_VIDEO_CENTERED"] = "1"
-        pygame.init()
-
-        # Set up the display
-        pygame.display.set_caption("HECA_TRON!")
         screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
         clock = pygame.time.Clock()
