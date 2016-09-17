@@ -8,10 +8,27 @@ SCREEN_HEIGHT = 1024
 
 class Menu():
 
-    def main(self):
-
+    def start(self):
         pygame.init()
+        sound = pygame.mixer.Sound('ttron.wav')
+        sound.play(loops=0, maxtime=0, fade_ms=0)
 
+        for i in range(15):
+
+            pics = ['frame_0_delay-0.04s.png', 'frame_1_delay-0.04s.png', 'frame_2_delay-0.04s.png',
+                    'frame_3_delay-0.04s.png', 'frame_4_delay-0.04s.png', 'frame_5_delay-0.04s.png',
+                    'frame_6_delay-0.04s.png', 'frame_7_delay-0.04s.png', ]
+            for pic in pics:
+                screen = pygame.display.set_mode((1280, 1024))
+                end = pygame.image.load(pic)
+                end = pygame.transform.scale(end, (1280, 1024))
+                screen.fill((0, 0, 0))
+                screen.blit(end, (0, 0))
+                pygame.display.flip()
+                pygame.time.wait(20)
+
+    def main(self):
+        pygame.init()
         # Just a few static variables
         red = 255, 0, 0
         green = 0, 255, 0
@@ -24,11 +41,10 @@ class Menu():
         pygame.key.set_repeat(5, 30)
 
         bg = pygame.image.load('tron.jpg')
+        bg = pygame.transform.scale(bg, (1280, 1024))
         screen.fill((0, 0, 0))
         screen.blit(bg, (0, 0))
-
-        sound = pygame.mixer.Sound('ttron.wav')
-        sound.play(loops=0, maxtime=0, fade_ms=0)
+        pygame.display.flip()
 
         choose = dm.dumbmenu(screen, [
                                 '            Start Game',
@@ -54,9 +70,9 @@ class Menu():
 
 
 while True:
-
     print("Main LOOP...")
     m = Menu()
+    m.start()
     option = m.main()
     if option == 1:
         print("Start game...")
