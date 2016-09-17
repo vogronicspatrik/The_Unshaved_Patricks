@@ -297,6 +297,9 @@ class Game:
         print("Winner: ", winner)
         running = True
         clock = pygame.time.Clock()
+        sound = pygame.mixer.Sound('blast.wav')
+        sound.play(loops=0, maxtime=0, fade_ms=0)
+
         while running:
 
             clock.tick(60)
@@ -317,6 +320,7 @@ class Game:
 
             screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
             end = pygame.image.load('gameover.png')
+
             screen.fill((0, 0, 0))
             screen.blit(end, (10, 10))
             pygame.display.flip()
