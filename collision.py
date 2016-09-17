@@ -48,6 +48,8 @@ class Moto(pygame.sprite.Sprite):
 # Class for the orange dude
 class Player(object):
 
+    player_step = 3
+
     def __init__(self, player_num, px, py, sx, sy, start_direction):
         self.player_num = player_num
         self.rect = pygame.Rect(px, py, sx, sy)
@@ -60,31 +62,35 @@ class Player(object):
         if self.direction != 1:
             self.direction = 0
             self.moto.moveRight()
+            self.checkWalls()
 
     def moveLeft(self):
         if self.direction != 0:
             self.direction = 1
             self.moto.moveLeft()
+            self.checkWalls()
 
     def moveUp(self):
         if self.direction != 3:
             self.direction = 2
             self.moto.moveUp()
+            self.checkWalls()
 
     def moveDown(self):
         if self.direction != 2:
             self.direction = 3
             self.moto.moveDown()
+            self.checkWalls()
 
     def moveOn(self):
         if self.direction == 0:
-            self.move(2, 0)
+            self.move(Player.player_step, 0)
         if self.direction == 1:
-            self.move(-2, 0)
+            self.move(-Player.player_step, 0)
         if self.direction == 2:
-            self.move(0, -2)
+            self.move(0, -Player.player_step)
         if self.direction == 3:
-            self.move(0, 2)
+            self.move(0, Player.player_step)
 
     def move(self, dx, dy):
 
@@ -105,13 +111,37 @@ class Player(object):
         # Draw a wall (after the movement)
         Wall(self.player_num, (self.rect.centerx, self.rect.centery))
 
+    def checkWalls(self):
+        # check long exiting lines
+        return
+'''
+        start_pos = end_pos = prev_item = None
+        item_index = 0
+        for wall in Game.walls[0]:
+            # check continous vertical line
+            if prev_item is not None and wall.rect.x == prev_item.rect.x:
+                if start_pos is None:
+                    start_pos = (prev_item.rect.x, prev_item.rect.y)
+                    print("From:", start_pos)
+            elif prev_item is not None and start_pos is not None and wall.rect.x != prev_item.rect.x:
+                end_pos = (prev_item.rect.x, prev_item.rect.y)
+                print("End:", end_pos)
+                start_pos = end_pos = None
 
-# Nice class to hold a wall rect
+            if start_pos is not None and end_pos is None:
+                Game.walls[0].pop(item_index-1)
+
+            prev_item = wall
+            item_index += 1
+'''
+
+
+# Nice class to draw a line after the motos
 class Wall(object):
 
     def __init__(self, player_num, pos):
-        Game.walls[player_num].append(self)
         self.rect = pygame.Rect(pos[0], pos[1], 3, 3)
+        Game.walls[player_num].append(self)
 
 
 # MAIN
@@ -171,7 +201,7 @@ class Game:
 
         running = True
         while running:
-            clock.tick(60)
+            clock.tick(10)
 
             for e in pygame.event.get():
                 if e.type == pygame.QUIT:
