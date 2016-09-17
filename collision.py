@@ -135,8 +135,8 @@ class Game:
         # walls for 2 players: lists in list
         Game.walls = [[], []]
         # starting positions
-        player = Player(0, SCREEN_WIDTH - 1, int(SCREEN_HEIGHT / 2), 2, 16, 1)
-        player2 = Player(1, 0, int(SCREEN_HEIGHT / 2), 2, 16, 0)
+        player = Player(0, SCREEN_WIDTH - 80, int(SCREEN_HEIGHT / 2), 2, 16, 1)
+        player2 = Player(1, 80, int(SCREEN_HEIGHT / 2), 2, 16, 0)
 
         # JOYSTICK
         try:
