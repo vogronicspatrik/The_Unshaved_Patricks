@@ -281,11 +281,7 @@ class Game:
 
             pygame.display.flip()
 
-        return self.game_over(winner)
-
-    # END SCREEN
-    def game_over(self, winner):
-
+        # GAME OVER
         print("Winner: ", winner)
         running = True
         clock = pygame.time.Clock()
@@ -297,14 +293,18 @@ class Game:
             clock.tick(60)
 
             for e in pygame.event.get():
-                if e.type == pygame.QUIT:
-                    print("QUIT 1")
-                    running = False
-                    pygame.quit()
-                if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
-                    print("QUIT 2")
-                    running = False
-                    pygame.quit()
+                if e.type == pygame.JOYBUTTONDOWN:
+                    player1Button = player1_joystick.get_button(0)
+                    if (player1Button > 0):
+                        running = False
+                        print("BACK TO MENU")
+                        return True
+                    player2Button = player2_joystick.get_button(0)
+                    if (player2Button > 0):
+                        running = False
+                        print("BACK TO MENU")
+                        return True
+
                 if e.type == pygame.KEYDOWN:
                     running = False
                     print("BACK TO MENU")
