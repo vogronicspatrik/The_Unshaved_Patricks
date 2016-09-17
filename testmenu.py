@@ -177,30 +177,31 @@ def dumbmenu(screen, menu, x_pos = 100, y_pos = 100, font = None,
         if exitMenu is True:
             break
 
-        # JOYSTICK
-        try:
-            if e.type == pygame.locals.JOYAXISMOTION:
-                player1jx, player1jy = player1_joystick.get_axis(0), player1_joystick.get_axis(1)
-                if player1jy < 0:
-                    # UP
-                    ArrowPressed = True
-                    if cursorpos == 0:
-                        cursorpos = len(menu) - 1
-                    else:
-                        cursorpos -= 1
-
-                if player1jy > 0:
-                    # DOWN
-                    ArrowPressed = True
-                    if cursorpos == len(menu) - 1:
-                        cursorpos = 0
-                    else:
-                        cursorpos += 1
-
-        except:
-            pass
-
         for event in pygame.event.get():
+
+            # JOYSTICK
+            try:
+                if event.type == pygame.locals.JOYAXISMOTION:
+                    player1jx, player1jy = player1_joystick.get_axis(0), player1_joystick.get_axis(1)
+                    if player1jy < 0:
+                        # UP
+                        ArrowPressed = True
+                        if cursorpos == 0:
+                            cursorpos = len(menu) - 1
+                        else:
+                            cursorpos -= 1
+
+                    if player1jy > 0:
+                        # DOWN
+                        ArrowPressed = True
+                        if cursorpos == len(menu) - 1:
+                            cursorpos = 0
+                        else:
+                            cursorpos += 1
+
+            except:
+                pass
+
             if event.type == pygame.QUIT:
                 return -1
             if event.type == pygame.KEYDOWN:
