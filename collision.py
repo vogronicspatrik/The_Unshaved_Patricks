@@ -154,31 +154,23 @@ class Game:
         sound = pygame.mixer.Sound('ttron.wav')
         sound.play(loops=0, maxtime=0, fade_ms=0)
 
-        end = pygame.image.load('three.png')
+        end = pygame.image.load('number3.png')
         screen.fill((0, 0, 0))
-        screen.blit(end, (500, 200))
+        screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
         pygame.display.flip()
         pygame.time.wait(1000)
 
-        end = pygame.image.load('two.png')
+        end = pygame.image.load('number2.png')
         screen.fill((0, 0, 0))
-        screen.blit(end, (500, 200))
+        screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
         pygame.display.flip()
         pygame.time.wait(1000)
 
-        end = pygame.image.load('one.png')
+        end = pygame.image.load('number1.png')
         screen.fill((0, 0, 0))
-        screen.blit(end, (500, 200))
+        screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
         pygame.display.flip()
         pygame.time.wait(1000)
-
-        end = pygame.image.load('start.png')
-        screen.fill((0, 0, 0))
-        screen.blit(end, (500, 350))
-        pygame.display.flip()
-        pygame.time.wait(1000)
-
-
 
         running = True
         while running:
