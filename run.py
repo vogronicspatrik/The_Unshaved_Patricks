@@ -22,7 +22,7 @@ class Menu():
         sound = pygame.mixer.Sound('ttron.wav')
         sound.play(loops=0, maxtime=0, fade_ms=0)
 
-        for i in range(15):
+        for i in range(5):
 
             pics = ['frame_0_delay-0.04s.png', 'frame_1_delay-0.04s.png', 'frame_2_delay-0.04s.png',
                     'frame_3_delay-0.04s.png', 'frame_4_delay-0.04s.png', 'frame_5_delay-0.04s.png',
@@ -52,6 +52,11 @@ class Menu():
         screen.fill((0, 0, 0))
         screen.blit(bg, (0, 0))
         pygame.display.flip()
+        myfont = pygame.font.SysFont("monospace", 72)
+        label = myfont.render('HECA_TRON PRODUCTION', 1, (0, 0, 255))
+        screen.blit(label, (500, 1000))
+        pygame.display.flip()
+
 
         choose = dm.dumbmenu(screen, [
                                 '            Start Game',
