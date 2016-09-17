@@ -311,9 +311,7 @@ class Game:
                     print("BACK TO MENU")
                     return True
 
-            screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
             end = pygame.image.load('gameover.png')
-
             screen.fill((0, 0, 0))
             screen.blit(end, (10, 10))
             pygame.display.flip()
