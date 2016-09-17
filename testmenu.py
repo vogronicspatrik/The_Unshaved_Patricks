@@ -202,9 +202,15 @@ def dumbmenu(screen, menu, x_pos = 100, y_pos = 100, font = None,
                 if event.type == pygame.JOYBUTTONDOWN:
                     player1Button = player1_joystick.get_button(0)
                     if (player1Button > 0):
+                        sound = pygame.mixer.Sound('button-2.wav')
+                        sound.play(loops=0, maxtime=0, fade_ms=0)
+
                         exitMenu = True
                     player2Button = player2_joystick.get_button(0)
                     if (player2Button > 0):
+                        sound = pygame.mixer.Sound('button-2.wav')
+                        sound.play(loops=0, maxtime=0, fade_ms=0)
+
                         exitMenu = True
 
             except:
@@ -296,15 +302,24 @@ def dumbmenu(screen, menu, x_pos = 100, y_pos = 100, font = None,
                     ArrowPressed = True
                     if cursorpos == 0:
                         cursorpos = len(menu) - 1
+                        sound = pygame.mixer.Sound('button-6.wav')
+                        sound.play(loops=0, maxtime=0, fade_ms=0)
+
                     else:
                         cursorpos -= 1
                 elif event.key == pygame.K_DOWN:
                     ArrowPressed = True
                     if cursorpos == len(menu) - 1:
                         cursorpos = 0
+                        sound = pygame.mixer.Sound('button-6.wav')
+                        sound.play(loops=0, maxtime=0, fade_ms=0)
+
                     else:
                         cursorpos += 1
                 elif event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN:
+                        sound = pygame.mixer.Sound('button-4.wav')
+                        sound.play(loops=0, maxtime=0, fade_ms=0)
+
                         exitMenu = True
 
     return cursorpos

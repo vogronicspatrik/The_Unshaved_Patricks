@@ -147,6 +147,9 @@ class Game:
         end = pygame.image.load('number3.png')
         screen.fill((0, 0, 0))
         screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
+        sound = pygame.mixer.Sound('start.wav')
+        sound.play(loops=0, maxtime=0, fade_ms=0)
+
         pygame.display.flip()
         pygame.time.wait(1000)
 
@@ -200,6 +203,15 @@ class Game:
                             player.moveUp()
                         if player2jy > 0:
                             player.moveDown()
+                    if event.type == pygame.JOYBUTTONDOWN:
+                        player1Button = player1_joystick.get_button(0)
+                        if (player1Button > 0):
+                            sound = pygame.mixer.Sound('button-2.wav')
+                            sound.play(loops=0, maxtime=0, fade_ms=0)
+                        player2Button = player2_joystick.get_button(0)
+                        if (player2Button > 0):
+                            sound = pygame.mixer.Sound('button-2.wav')
+                            sound.play(loops=0, maxtime=0, fade_ms=0)
                 except:
                     pass
 
