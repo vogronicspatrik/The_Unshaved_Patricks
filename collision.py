@@ -150,9 +150,6 @@ class Game:
             player1_joystick = None
             player2_joystick = None
 
-        # background music
-        sound = pygame.mixer.Sound('ttron.wav')
-        sound.play(loops=0, maxtime=0, fade_ms=0)
 
         end = pygame.image.load('number3.png')
         screen.fill((0, 0, 0))
