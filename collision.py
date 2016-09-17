@@ -145,35 +145,33 @@ class Game:
             player2_joystick = None
 
         end = pygame.image.load('number3.png')
-        # screen.fill((0, 0, 0))
+        screen.fill((0, 0, 0))
         screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
         pygame.display.flip()
         pygame.time.wait(1000)
 
         end = pygame.image.load('number2.png')
-        # screen.fill((0, 0, 0))
+        screen.fill((0, 0, 0))
         screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
         pygame.display.flip()
         pygame.time.wait(1000)
 
         end = pygame.image.load('number1.png')
-        # screen.fill((0, 0, 0))
+        screen.fill((0, 0, 0))
         screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
         pygame.display.flip()
         pygame.time.wait(1000)
 
         # end = pygame.image.load('arcade.jpg').convert()
         # screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
-        # pygame.display.flip()
+        pygame.display.flip()
 
         background_image = pygame.transform.scale(pygame.image.load('arcade.jpg').convert(), (1280, 1024))
-        screen.blit(background_image, [0, 0])
+        # screen.blit(background_image, [0, 0])
 
         running = True
         while running:
-            screen.blit(background_image, [0, 0])
-            pygame.display.flip()
-            clock.tick(100)
+            clock.tick(60)
 
             for e in pygame.event.get():
                 if e.type == pygame.QUIT:
@@ -245,9 +243,11 @@ class Game:
             if player2.moto.rect.y < 0 or player2.moto.rect.y > SCREEN_HEIGHT:
                 winner = 1
                 running = False
-
             # Draw the scene
+            screen.blit(background_image, [0, 0])
+            pygame.display.flip()
             # screen.fill((0, 0, 0))
+
             # Player 1 walls
             counter1 = 0
             counter2 = 0
