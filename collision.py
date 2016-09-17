@@ -306,6 +306,16 @@ class Game:
                     return True
 
             end = pygame.image.load('gameover.png')
+            screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 1024), (0.5 * SCREEN_HEIGHT) - (0.5 * 768)))
             screen.fill((0, 0, 0))
             screen.blit(end, (10, 10))
+            if winner == 2:
+                myfont = pygame.font.SysFont("monospace", 72)
+                label = myfont.render('Blue won!', 1, (0, 0, 225))
+                screen.blit(label, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 750)))
+            else:
+                myfont = pygame.font.SysFont("monospace", 72)
+                label = myfont.render('White won!', 1, (255, 255, 255))
+                screen.blit(label, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 750)))
+
             pygame.display.flip()
