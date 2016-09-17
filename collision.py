@@ -235,13 +235,17 @@ class Game:
             player2.moveOn()
 
             # check borders
-            if player.moto.rect.x < 0 or player2.moto.rect.x < 0:
+            if player.moto.rect.x < 0 or player.moto.rect.x > SCREEN_WIDTH:
+                winner = 2
                 running = False
-            if player.moto.rect.x > SCREEN_WIDTH or player2.moto.rect.x > SCREEN_WIDTH:
+            if player2.moto.rect.x < 0 or player2.moto.rect.x > SCREEN_WIDTH:
+                winner = 1
                 running = False
-            if player.moto.rect.y < 0 or player2.moto.rect.y < 0:
+            if player.moto.rect.y < 0 or player.moto.rect.y > SCREEN_HEIGHT:
+                winner = 2
                 running = False
-            if player.moto.rect.y > SCREEN_HEIGHT or player2.moto.rect.y > SCREEN_HEIGHT:
+            if player2.moto.rect.y < 0 or player2.moto.rect.y > SCREEN_HEIGHT:
+                winner = 1
                 running = False
 
             # Draw the scene
@@ -305,7 +309,7 @@ class Game:
                         print("BACK TO MENU")
                         return True
 
-                if e.type == pygame.KEYDOWN:
+                if e.type == pygame.KEYDOWN and (e.key == pygame.K_KP_ENTER or e.key == pygame.K_RETURN):
                     running = False
                     print("BACK TO MENU")
                     return True

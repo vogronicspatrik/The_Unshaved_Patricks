@@ -199,6 +199,14 @@ def dumbmenu(screen, menu, x_pos = 100, y_pos = 100, font = None,
                         else:
                             cursorpos += 1
 
+                if event.type == pygame.JOYBUTTONDOWN:
+                    player1Button = player1_joystick.get_button(0)
+                    if (player1Button > 0):
+                        exitMenu = True
+                    player2Button = player2_joystick.get_button(0)
+                    if (player2Button > 0):
+                        exitMenu = True
+
             except:
                 pass
 
