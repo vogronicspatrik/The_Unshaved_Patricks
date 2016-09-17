@@ -166,7 +166,7 @@ class Game:
         # screen.blit(end, ((0.5 * SCREEN_WIDTH) - (0.5 * 500), (0.5 * SCREEN_HEIGHT) - (0.5 * 500)))
         pygame.display.flip()
 
-        background_image = pygame.transform.scale(pygame.image.load('arcade.jpg').convert(), (1280, 1024))
+        # background_image = pygame.transform.scale(pygame.image.load('arcade.jpg').convert(), (1280, 1024))
         # screen.blit(background_image, [0, 0])
 
         running = True
@@ -244,9 +244,9 @@ class Game:
                 winner = 1
                 running = False
             # Draw the scene
-            screen.blit(background_image, [0, 0])
-            pygame.display.flip()
-            # screen.fill((0, 0, 0))
+            # screen.blit(background_image, [0, 0])
+            # pygame.display.flip()
+            screen.fill((0, 0, 0))
 
             # Player 1 walls
             counter1 = 0
