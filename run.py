@@ -54,7 +54,7 @@ class Menu():
         pygame.display.flip()
         myfont = pygame.font.SysFont("monospace", 72)
         label = myfont.render('HECA_TRON PRODUCTION', 1, (0, 0, 255))
-        screen.blit(label, (300, 800))
+        screen.blit(label, (300, 900))
         pygame.display.flip()
 
 
